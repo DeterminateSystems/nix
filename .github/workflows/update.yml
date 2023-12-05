@@ -11,6 +11,12 @@ jobs:
       - uses: "DeterminateSystems/nix-installer-action@main"
       - uses: "DeterminateSystems/magic-nix-cache-action@main"
       - run: |
+          echo "GIT_AUTHOR_NAME=github-actions-bot" >> $GITHUB_ENV
+          echo "GIT_AUTHOR_EMAIL=<github-actions-bot@determinate.systems>" >> $GITHUB_ENV
+          echo "GIT_COMMITTER_NAME=github-actions-bot" >> $GITHUB_ENV
+          echo "GIT_COMMITTER_EMAIL=<github-actions-bot@determinate.systems>" >> $GITHUB_ENV
+
+      - run: |
           set -eux
           url=$(
             nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz --\
