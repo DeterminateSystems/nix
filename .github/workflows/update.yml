@@ -10,4 +10,19 @@ jobs:
       - uses: "DeterminateSystems/nix-installer-action@main"
       - uses: "DeterminateSystems/magic-nix-cache-action@main"
       - run: |
-          nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz 
+          set -eux
+          url=$(
+            nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz --\
+              list versions --json NixOS/nix '*' \
+            | nix run nixpkgs#jq -- -r '.[-1] | "https://releases.nixos.org/nix/nix-" + .version + "/fallback-paths.nix"')
+          curl "$url" > versions.nix
+          git add versions.nix
+          git commit -m "$url"
+      - name: Create PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          base: main
+          branch: update
+          delete-branch: true
+          token: ${{ github.token }}
