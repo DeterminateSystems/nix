@@ -25,6 +25,8 @@ jobs:
           curl "$url" > versions.nix
           git add versions.nix
           git commit -m "$url"
+
+          echo "SOURCE_URL=$url" >> $GITHUB_ENV
       - name: Create PR
         id: create-pr
         uses: peter-evans/create-pull-request@v5
@@ -33,3 +35,4 @@ jobs:
           branch: update
           delete-branch: true
           token: ${{ github.token }}
+          title: ${{ env.SOURCE_URL }}
