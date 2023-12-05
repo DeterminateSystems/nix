@@ -1,0 +1,13 @@
+name: Download the latest fallback-paths.nix
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "DeterminateSystems/nix-installer-action@main"
+      - uses: "DeterminateSystems/magic-nix-cache-action@main"
+      - run: |
+          nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz 
