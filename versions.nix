@@ -1,3 +1,6 @@
+# Mirrored from https://releases.nixos.org/nix/nix-2.19.2/fallback-paths.nix
+# via https://github.com/DeterminateSystems/nix-upgrade
+
 {
   x86_64-linux = "/nix/store/smfmnz0ylx80wkbqbjibj7zcw4q668xp-nix-2.19.2";
   i686-linux = "/nix/store/knp0akbpj2k0rf26fmysmxdysmayihax-nix-2.19.2";
