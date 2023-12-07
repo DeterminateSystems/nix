@@ -22,7 +22,15 @@ jobs:
             nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz --\
               list versions --json NixOS/nix '*' \
             | nix run nixpkgs#jq -- -r '.[-1] | "https://releases.nixos.org/nix/nix-" + .version + "/fallback-paths.nix"')
-          curl "$url" > versions.nix
+          (
+            echo "# Mirrored from $url"
+            echo "# via https://github.com/DeterminateSystems/nix-upgrade"
+            echo ""
+            curl "$url"
+          ) > versions.nix 
+
+          # check it evals
+          nix eval --json -f ./versions.nix
           git add versions.nix
           git commit -m "$url"
 
