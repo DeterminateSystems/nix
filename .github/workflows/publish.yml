@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           mkdir ./artifacts
-          cp './versions.nix' './artifacts/Universal'
+          cp './versions.nix' './artifacts/universal'
 
       - uses: DeterminateSystems/push-artifact-ids@main
         if: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
