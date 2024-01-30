@@ -1,10 +1,10 @@
-# Mirrored from https://releases.nixos.org/nix/nix-2.19.2/fallback-paths.nix
+# Mirrored from https://releases.nixos.org/nix/nix-2.19.3/fallback-paths.nix
 # via https://github.com/DeterminateSystems/nix-upgrade
 
 {
-  x86_64-linux = "/nix/store/smfmnz0ylx80wkbqbjibj7zcw4q668xp-nix-2.19.2";
-  i686-linux = "/nix/store/knp0akbpj2k0rf26fmysmxdysmayihax-nix-2.19.2";
-  aarch64-linux = "/nix/store/761hq0abn07nrydrf6mls61bscx2vz2i-nix-2.19.2";
-  x86_64-darwin = "/nix/store/zlqvxis1dfcfgmy5fza4hllg6h03vhpb-nix-2.19.2";
-  aarch64-darwin = "/nix/store/53r8ay20mygy2sifn7j2p8wjqlx2kxik-nix-2.19.2";
+  x86_64-linux = "/nix/store/fviln222hm2x4mwxmgc0jh4sb1wknd5z-nix-2.19.3";
+  i686-linux = "/nix/store/0gxzlz8binscklikmzrnxy9lmx7kv6yh-nix-2.19.3";
+  aarch64-linux = "/nix/store/3q7n5gwyi9nkhx7frzk5n59ma1fkl965-nix-2.19.3";
+  x86_64-darwin = "/nix/store/zhkrf34sb7x28l10jzzzmf809cl6rxw3-nix-2.19.3";
+  aarch64-darwin = "/nix/store/ylwh78ikfn6w4vz1hw1qj0bdj414swqx-nix-2.19.3";
 }
