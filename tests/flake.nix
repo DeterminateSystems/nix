@@ -38,7 +38,7 @@
           home.homeDirectory = "/no-such/directory";
         }
       ];
-    });
+    }).activation-script;
 
     checks.x86_64-darwin.nix-darwin = (nix-darwin.lib.darwinSystem {
       system = "x86_64-darwin";
