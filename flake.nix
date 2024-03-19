@@ -26,11 +26,23 @@
     in
     {
       closures = forAllSystems ({ system, ... }: nix.packages."${system}".default);
+      tarballs = forAllSystems ({ system, ... }: nix.checks."${system}".binaryTarball);
+
       checks = forAllSystems ({ system, ... }: {
-        fetchable = nix.packages."${system}".default;
+        closure = nix.packages."${system}".default;
+        tarball = nix.checks."${system}".binaryTarball;
       });
 
       packages = forAllSystems ({ system, pkgs, ... }: {
+        tarballs_json = pkgs.runCommand "tarballs.json"
+          {
+            buildInputs = [ pkgs.jq ];
+            passAsFile = [ "json" ];
+            json = builtins.toJSON (self.tarballs);
+          } ''
+          cat "$jsonPath" | jq . > $out
+        '';
+
         closures_json = pkgs.runCommand "versions.json"
           {
             buildInputs = [ pkgs.jq ];

@@ -26,8 +26,16 @@ jobs:
       - run: |
           set -eux
 
-          nix flake check --all-systems
+          # Ensure all the checks can be built without internet
+          nix flake check --all-systems --jobs 0
+          nix build .#tarballs_json
+          cat result
+
+          nix build .#closures_json
+          cat result
+
           nix build .#closures_nix
+          cat result
 
           mkdir ./artifacts
           cat './result' > './artifacts/universal'
