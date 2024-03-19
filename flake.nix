@@ -34,6 +34,8 @@
       });
 
       packages = forAllSystems ({ system, pkgs, ... }: {
+        default = nix.packages."${system}".default;
+
         tarballs_json = pkgs.runCommand "tarballs.json"
           {
             buildInputs = [ pkgs.jq ];
@@ -68,5 +70,33 @@
           substituteAll "$templatePath" "$out"
         '';
       });
+
+      darwinModules.default = { lib, config, pkgs, ... }: {
+        nix = {
+          package = self.packages.${pkgs.stdenv.system}.default;
+
+          registry.nixpkgs = {
+            exact = true;
+            from = {
+              type = "nixpkgs";
+              url = "indirect";
+            };
+            to = {
+              type = "tarball";
+              url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1.0.tar.gz";
+            };
+          };
+
+          settings = {
+            bash-prompt-prefix = "(nix:$name)\\040";
+            build-users-group = "nixbld";
+            experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+            extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
+            upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
+          };
+        };
+
+        services.nix-daemon.enable = true;
+      };
     };
 }
