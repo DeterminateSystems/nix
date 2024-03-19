@@ -100,3 +100,10 @@ jobs:
           directory: ./artifacts
           ids_project_name: nix-upgrade
           ids_binary_prefix: determinate-nix-versions.nix
+
+      - uses: "DeterminateSystems/flakehub-push@main"
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          visibility: "public"
+          name: "DeterminateSystems/nix"
+          tag: "${{ github.ref_name }}"
