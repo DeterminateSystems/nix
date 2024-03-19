@@ -40,7 +40,7 @@
       ];
     });
 
-    checks.aarch64-darwin.nix-darwin = nix-darwin.lib.darwinSystem {
+    checks.aarch64-darwin.nix-darwin = (nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
 
       modules = [
@@ -50,6 +50,6 @@
           ];
         })
       ];
-    };
+    }).system;
   };
 }
