@@ -22,9 +22,17 @@ jobs:
       id-token: write # In order to request a JWT for AWS auth
     steps:
       - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
       - run: |
+          set -eux
+
+          nix flake check --all-systems
+          nix build .#manifest
+
           mkdir ./artifacts
-          cp './versions.nix' './artifacts/universal'
+          cat './result' > './artifacts/universal'
+
+          nix eval -f ./artifacts/universal
 
       - uses: DeterminateSystems/push-artifact-ids@main
         if: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}

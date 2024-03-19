@@ -7,40 +7,11 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "DeterminateSystems/nix-installer-action@main"
-      - uses: "DeterminateSystems/magic-nix-cache-action@main"
-      - run: |
-          echo "GIT_AUTHOR_NAME=github-actions-bot" >> $GITHUB_ENV
-          echo "GIT_AUTHOR_EMAIL=<github-actions-bot@determinate.systems>" >> $GITHUB_ENV
-          echo "GIT_COMMITTER_NAME=github-actions-bot" >> $GITHUB_ENV
-          echo "GIT_COMMITTER_EMAIL=<github-actions-bot@determinate.systems>" >> $GITHUB_ENV
-
-      - run: |
-          set -eux
-          url=$(
-            nix run https://flakehub.com/f/DeterminateSystems/fh/0.1.9.tar.gz --\
-              list versions --json NixOS/nix '*' \
-            | nix run nixpkgs#jq -- -r '.[-1] | "https://releases.nixos.org/nix/nix-" + .version + "/fallback-paths.nix"')
-          (
-            echo "# Mirrored from $url"
-            echo "# via https://github.com/DeterminateSystems/nix-upgrade"
-            echo ""
-            curl "$url"
-          ) > versions.nix 
-
-          # check it evals
-          nix eval --json -f ./versions.nix
-          git add versions.nix
-          git commit -m "$url"
-
-          echo "SOURCE_URL=$url" >> $GITHUB_ENV
-      - name: Create PR
-        id: create-pr
-        uses: peter-evans/create-pull-request@v5
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/update-flake-lock@main
         with:
-          base: main
-          branch: update
-          delete-branch: true
-          token: ${{ github.token }}
-          title: ${{ env.SOURCE_URL }}
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+            automated
