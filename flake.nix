@@ -89,7 +89,6 @@
 
           settings = {
             bash-prompt-prefix = "(nix:$name)\\040";
-            build-users-group = "nixbld";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
@@ -117,7 +116,6 @@
 
           settings = {
             bash-prompt-prefix = "(nix:$name)\\040";
-            build-users-group = "nixbld";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
@@ -143,7 +141,6 @@
 
           settings = {
             bash-prompt-prefix = "(nix:$name)\\040";
-            build-users-group = "nixbld";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
