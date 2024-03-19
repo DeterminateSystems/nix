@@ -27,8 +27,8 @@
       ];
     }).config.system.build.toplevel;
 
-    checks.aarch64-darwin.home-manager = (home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+    checks.x86_64-linux.home-manager = (home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
       modules = [
         nix.homeManagerModules.default
@@ -40,8 +40,8 @@
       ];
     });
 
-    checks.aarch64-darwin.nix-darwin = (nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
+    checks.x86_64-darwin.nix-darwin = (nix-darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
 
       modules = [
         ({ pkgs, ... }: {
