@@ -25,7 +25,7 @@
           boot.loader.grub.devices = [ "/dev/bogus" ];
         }
       ];
-    }).nixos.config.system.build.toplevel;
+    }).config.system.build.toplevel;
 
     checks.aarch64-darwin.home-manager = (home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.aarch64-darwin;
