@@ -31,7 +31,7 @@
       });
 
       packages = forAllSystems ({ pkgs, ... }: {
-        manifest = pkgs.runCommand "versions.json"
+        manifest = pkgs.runCommand "versions.nix"
           {
             buildInputs = [ pkgs.jq ];
             passAsFile = [ "json" "template" ];
