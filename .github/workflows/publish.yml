@@ -27,7 +27,7 @@ jobs:
           set -eux
 
           nix flake check --all-systems
-          nix build .#manifest
+          nix build .#closures_nix
 
           mkdir ./artifacts
           cat './result' > './artifacts/universal'
