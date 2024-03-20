@@ -1,7 +1,7 @@
 {
   description = "Determinate Nix";
   inputs = {
-    nix.url = "https://flakehub.com/f/NixOS/nix/2.21";
+    nix.url = "https://flakehub.com/f/NixOS/nix/=2.20.5";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
 
