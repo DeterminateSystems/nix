@@ -26,7 +26,19 @@
     in
     {
       closures = forAllSystems ({ system, ... }: nix.packages."${system}".default);
-      tarballs = forAllSystems ({ system, ... }: nix.checks."${system}".binaryTarball);
+      tarballs_indirect = forAllSystems ({ system, ... }: nix.checks."${system}".binaryTarball);
+
+      tarballs_direct = forAllSystems
+        ({ pkgs, ... }:
+          forAllSystems
+            ({ system, ... }:
+              let
+                pkg = nix.checks."${system}".binaryTarball;
+              in
+              pkgs.runCommand pkg.name { } ''
+                ln -s ${pkg}/nix-*.tar* $out
+              '')
+        );
 
       checks = forAllSystems ({ system, ... }: {
         closure = nix.packages."${system}".default;
