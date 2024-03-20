@@ -27,18 +27,7 @@
     {
       closures = forAllSystems ({ system, ... }: nix.packages."${system}".default);
       tarballs_indirect = forAllSystems ({ system, ... }: nix.checks."${system}".binaryTarball);
-
-      tarballs_direct = forAllSystems
-        ({ pkgs, ... }:
-          forAllSystems
-            ({ system, ... }:
-              let
-                pkg = nix.checks."${system}".binaryTarball;
-              in
-              pkgs.runCommand pkg.name { } ''
-                ln -s ${pkg}/nix-*.tar* $out
-              '')
-        );
+      tarballs_direct = forAllSystems ({ system, ... }: "${nix.checks."${system}".binaryTarball}/nix-${nix.packages."${system}".default.version}-${system}.tar.xz");
 
       checks = forAllSystems ({ system, ... }: {
         closure = nix.packages."${system}".default;
@@ -52,7 +41,7 @@
           {
             buildInputs = [ pkgs.jq ];
             passAsFile = [ "json" ];
-            json = builtins.toJSON (self.tarballs);
+            json = builtins.toJSON (self.tarballs_direct);
           } ''
           cat "$jsonPath" | jq . > $out
         '';
