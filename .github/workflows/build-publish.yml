@@ -1,0 +1,109 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+
+jobs:
+  test-closures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: |
+          set -eux
+
+          # Ensure all the checks can be built without internet
+          nix flake check --all-systems --max-jobs 0
+          nix build .#tarballs_json
+          cat result
+
+          nix build .#closures_json
+          cat result
+
+          nix build .#closures_nix
+          cat result
+
+  test-modules:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          set -eux
+
+          cd tests
+          rm -f flake.lock
+          nix flake lock
+          nix flake check
+
+  build-versions-nix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: |
+          set -eux
+
+          # Ensure all the checks can be built without internet
+          nix flake check --all-systems --max-jobs 0
+          nix build .#tarballs_json
+          cat result
+
+          nix build .#closures_json
+          cat result
+
+          nix build .#closures_nix
+          cat result
+
+  publish:
+    needs: [test-closures, test-modules, build-versions-nix]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: |
+          set -eux
+
+          nix build .#closures_nix
+          cat result
+
+          mkdir ./artifacts
+          cat './result' > './artifacts/universal'
+          nix eval -f ./artifacts/universal
+
+      - uses: DeterminateSystems/push-artifact-ids@main
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
+        with:
+          s3_upload_role: ${{ secrets.AWS_S3_UPLOAD_ROLE }}
+          bucket: ${{ secrets.AWS_S3_UPLOAD_BUCKET }}
+          directory: ./artifacts
+          ids_project_name: nix-upgrade
+          ids_binary_prefix: determinate-nix-versions.nix
+
+      - uses: "DeterminateSystems/flakehub-push@main"
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          visibility: "public"
+          name: "DeterminateSystems/nix"
+          tag: "${{ github.ref_name }}"
