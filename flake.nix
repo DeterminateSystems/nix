@@ -79,8 +79,8 @@
           registry.nixpkgs = {
             exact = true;
             from = {
-              type = "nixpkgs";
-              url = "indirect";
+              type = "indirect";
+              id = "nixpkgs";
             };
             to = {
               type = "tarball";
@@ -106,8 +106,8 @@
           registry.nixpkgs = {
             exact = true;
             from = {
-              type = "nixpkgs";
-              url = "indirect";
+              type = "indirect";
+              id = "nixpkgs";
             };
             to = {
               type = "tarball";
@@ -131,8 +131,8 @@
           registry.nixpkgs = {
             exact = true;
             from = {
-              type = "nixpkgs";
-              url = "indirect";
+              type = "indirect";
+              id = "nixpkgs";
             };
             to = {
               type = "tarball";
