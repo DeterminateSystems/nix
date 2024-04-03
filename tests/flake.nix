@@ -32,8 +32,18 @@
               --sort-keys \
               --slurpfile expect "$expectPath" \
               '[to_entries[] | { key: .key, value: .value.value } | select(.key | in($expect[0]))] | from_entries' > rendered.json
-    
-          dyff between --set-exit-code "$expectPath" ./rendered.json 
+
+          echo "Rendered nix.conf:"
+          cat "${build}/${configDir}/nix.conf"
+
+          echo "All Nix settings:"
+          NIX_CONF_DIR=${build}/${configDir} ${build}/${binDir}/nix config show --json \
+            | jq \
+              --sort-keys \
+              --slurpfile expect "$expectPath" \
+              '[to_entries[] | { key: .key, value: .value.value }] | from_entries'
+
+          dyff between --set-exit-code "$expectPath" ./rendered.json
           touch "$out"
         '';
     in
