@@ -33,7 +33,7 @@
               --slurpfile expect "$expectPath" \
               '[to_entries[] | { key: .key, value: .value.value } | select(.key | in($expect[0]))] | from_entries' > rendered.json
     
-          dyff between --set-exit-code ./rendered.json "$expectPath"
+          dyff between --set-exit-code "$expectPath" ./rendered.json 
           touch "$out"
         '';
     in
