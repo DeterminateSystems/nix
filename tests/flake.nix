@@ -95,7 +95,16 @@
         configDir = "etc/nix";
         expect = {
           sandbox = true;
-          extra-sandbox-paths = [ "/private/etc/ssl/openssl.cnf" ];
+          sandbox-paths = [
+            "/System/Library/Frameworks"
+            "/System/Library/PrivateFrameworks"
+            "/bin/bash"
+            "/bin/sh"
+            "/private/etc/ssl/openssl.cnf"
+            "/private/tmp"
+            "/private/var/tmp"
+            "/usr/lib"
+          ];
         };
 
         build = (nix-darwin.lib.darwinSystem {

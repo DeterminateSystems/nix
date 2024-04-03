@@ -93,6 +93,13 @@
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
+            extra-sandbox-paths = (lib.mkIf (config.nix.settings.sandbox or false) [
+              # Impure host software that links to openssl needs to be able to read openssl.cnf.
+              # Examples for curl specifically:
+              # https://github.com/NixOS/nix/issues/9625
+              # https://github.com/NixOS/nixpkgs/pull/300521
+              "/private/etc/ssl/openssl.cnf"
+            ]);
           };
         };
 
