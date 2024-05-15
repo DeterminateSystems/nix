@@ -1,7 +1,7 @@
 {
   description = "Determinate Nix";
   inputs = {
-    nix.url = "https://flakehub.com/f/NixOS/nix/=2.21.2";
+    nix.url = "github:edolstra/nix/lazy-trees";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
 
