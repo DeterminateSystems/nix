@@ -89,6 +89,7 @@
           };
 
           settings = {
+            always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
@@ -116,6 +117,7 @@
           };
 
           settings = {
+            always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
@@ -141,6 +143,7 @@
           };
 
           settings = {
+            always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
             experimental-features = [ "nix-command" "flakes" "repl-flake" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
