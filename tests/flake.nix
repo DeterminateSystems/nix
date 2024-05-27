@@ -7,8 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      # Switch to /release-23.11 and drop `home.enableNixpkgsReleaseCheck = false;` when https://github.com/nix-community/home-manager/pull/5161 is merged
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -37,7 +36,6 @@
           home.stateVersion = "23.11";
           home.username = "example";
           home.homeDirectory = "/no-such/directory";
-          home.enableNixpkgsReleaseCheck = false;
         }
       ];
     }).activation-script;
