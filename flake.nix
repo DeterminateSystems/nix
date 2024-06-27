@@ -91,7 +91,7 @@
           settings = {
             always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+            experimental-features = [ "nix-command" "flakes" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
@@ -119,7 +119,7 @@
           settings = {
             always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+            experimental-features = [ "nix-command" "flakes" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
@@ -145,7 +145,7 @@
           settings = {
             always-allow-substitutes = true;
             bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+            experimental-features = [ "nix-command" "flakes" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
