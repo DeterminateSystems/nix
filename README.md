@@ -49,6 +49,7 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+  inputs.nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs/0.1.*";
 
   outputs = { nix, nixpkgs, home-manager, ... }:
     let
