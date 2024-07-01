@@ -7,9 +7,10 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+  inputs.nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs/0.2405.*";
 
-  outputs = { nix, nix-darwin, ... }: {
-    nixosConfigurations.default = nix-darwin.lib.darwinSystem {
+  outputs = { nix, nixpkgs, ... }: {
+    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       modules = [
         ({ pkgs, ... }: {
           imports = [
