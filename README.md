@@ -8,14 +8,14 @@ Install and manage Determinate Nix.
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
-  outputs = { ... }: @ inputs {
+  outputs = { nix, nix-darwin, ... }: {
     nixosConfigurations.default = nix-darwin.lib.darwinSystem {
       modules = [
         ({ pkgs, ... }: {
           imports = [
-            inputs.nix.nixosModules.default
+            nix.nixosModules.default
           ];
-          /* ... rest of your configuration */
+          # the rest of your configuration
         })
       ];
     };
@@ -29,14 +29,14 @@ Install and manage Determinate Nix.
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
-  outputs = { ... }: @ inputs {
+  outputs = { nix, nix-darwin, ... }: {
     darwinConfigurations.aarch64-linux.default = nix-darwin.lib.darwinSystem {
       modules = [
         ({ pkgs, ... }: {
           imports = [
-            inputs.nix.darwinModules.default
+            nix.darwinModules.default
           ];
-          /* ... rest of your configuration */
+          # the rest of your configuration
         })
       ];
     };
@@ -50,7 +50,7 @@ Install and manage Determinate Nix.
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs:
+  outputs = { nix, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -59,10 +59,9 @@ Install and manage Determinate Nix.
         inherit pkgs;
 
         modules = [
-          inputs.nix.homeManagerModules.default
+          nix.homeManagerModules.default
         ];
       };
     }
 }
-
 ```
