@@ -7,10 +7,11 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
-  inputs.nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs/0.2405.*";
+  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.*";
 
   outputs = { nix, nixpkgs, ... }: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.my-workstation = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
       modules = [
         ({ pkgs, ... }: {
           imports = [
@@ -31,7 +32,8 @@ Install and manage Determinate Nix.
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
   outputs = { nix, nix-darwin, ... }: {
-    darwinConfigurations.aarch64-linux.default = nix-darwin.lib.darwinSystem {
+    darwinConfigurations.my-workstation-aarch64-darwin = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
       modules = [
         ({ pkgs, ... }: {
           imports = [
@@ -50,15 +52,14 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
-  inputs.nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs/0.2405.*";
+  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.*";
   inputs.home-manager.url = "https://flakehub.com/f/nix-community/home-manager/0.2405.*";
 
   outputs = { nix, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in {
-      homeConfigurations.jdoe = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.my-workstation = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
