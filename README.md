@@ -7,15 +7,17 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.*";
 
-  outputs = { ... }: @ inputs {
-    nixosConfigurations.default = nix-darwin.lib.darwinSystem {
+  outputs = { nix, nixpkgs, ... }: {
+    nixosConfigurations.my-workstation = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
       modules = [
         ({ pkgs, ... }: {
           imports = [
-            inputs.nix.nixosModules.default
+            nix.nixosModules.default
           ];
-          /* ... rest of your configuration */
+          # the rest of your configuration
         })
       ];
     };
@@ -29,14 +31,15 @@ Install and manage Determinate Nix.
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
-  outputs = { ... }: @ inputs {
-    darwinConfigurations.aarch64-linux.default = nix-darwin.lib.darwinSystem {
+  outputs = { nix, nix-darwin, ... }: {
+    darwinConfigurations.my-workstation-aarch64-darwin = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
       modules = [
         ({ pkgs, ... }: {
           imports = [
-            inputs.nix.darwinModules.default
+            nix.darwinModules.default
           ];
-          /* ... rest of your configuration */
+          # the rest of your configuration
         })
       ];
     };
@@ -49,20 +52,20 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.*";
+  inputs.home-manager.url = "https://flakehub.com/f/nix-community/home-manager/0.2405.*";
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs:
+  outputs = { nix, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in {
-      homeConfigurations.jdoe = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.my-workstation = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
-          inputs.nix.homeManagerModules.default
+          nix.homeManagerModules.default
         ];
       };
     }
 }
-
 ```
