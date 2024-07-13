@@ -3,9 +3,10 @@
   inputs = {
     nix.url = "https://flakehub.com/f/NixOS/nix/=2.23.3";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    fh.url = "https://flakehub.com/f/DeterminateSystems/fh/*";
   };
 
-  outputs = { self, nix, nixpkgs, ... }:
+  outputs = { self, nix, nixpkgs, fh, ... }:
     let
       lib = nixpkgs.lib;
       targetedSystems = [
@@ -97,6 +98,8 @@
           };
         };
 
+        environment.systemPackages = [ fh.packages.${pkgs.stdenv.system}.default ];
+
         services.nix-daemon.enable = true;
       };
 
@@ -124,6 +127,8 @@
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
         };
+
+        environment.systemPackages = [ fh.packages.${pkgs.stdenv.system}.default ];
       };
 
       homeManagerModules.default = { lib, config, pkgs, ... }: {
@@ -150,6 +155,8 @@
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
         };
+
+        home.packages = [ fh.packages.${pkgs.stdenv.system}.default ];
       };
     };
 }
