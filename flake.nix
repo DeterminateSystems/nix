@@ -1,9 +1,13 @@
 {
   description = "Determinate Nix";
+
   inputs = {
     nix.url = "https://flakehub.com/f/NixOS/nix/=2.23.3";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
-    fh.url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+    fh = {
+      url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nix, nixpkgs, fh, ... }:
