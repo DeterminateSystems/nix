@@ -143,11 +143,10 @@
           };
 
           settings = {
-            always-allow-substitutes = true;
+            # Note: home-manager configures the user's environment, so only set unrestricted Nix options.
             bash-prompt-prefix = "(nix:$name)\\040";
             experimental-features = [ "nix-command" "flakes" ];
             extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
-            upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
         };
       };
