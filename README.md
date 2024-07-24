@@ -30,6 +30,7 @@ Install and manage Determinate Nix.
 ```nix
 {
   inputs.nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+  inputs.nix-darwin.url = "github:LnL7/nix-darwin";
 
   outputs = { nix, nix-darwin, ... }: {
     darwinConfigurations.my-workstation-aarch64-darwin = nix-darwin.lib.darwinSystem {
