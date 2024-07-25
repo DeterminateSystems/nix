@@ -150,5 +150,9 @@
           };
         };
       };
+
+      # homeModules is preferred but this ensures compatibility for anyone
+      # currently using nix.homeManagerModules.default in their config
+      homeManagerModules.default = self.homeModules.default;
     };
 }
