@@ -126,7 +126,7 @@
         };
       };
 
-      homeManagerModules.default = { lib, config, pkgs, ... }: {
+      homeModules.default = { lib, config, pkgs, ... }: {
         nix = {
           package = self.packages.${pkgs.stdenv.system}.default;
 
@@ -150,5 +150,9 @@
           };
         };
       };
+
+      # homeModules is preferred but this ensures compatibility for anyone
+      # currently using nix.homeManagerModules.default in their config
+      homeManagerModules.default = self.homeModules.default;
     };
 }

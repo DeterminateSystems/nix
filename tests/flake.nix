@@ -31,7 +31,7 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
       modules = [
-        nix.homeManagerModules.default
+        nix.homeModules.default
         {
           home.stateVersion = "23.11";
           home.username = "example";
