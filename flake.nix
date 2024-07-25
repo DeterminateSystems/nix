@@ -126,7 +126,7 @@
         };
       };
 
-      homeManagerModules.default = { lib, config, pkgs, ... }: {
+      homeModules.default = { lib, config, pkgs, ... }: {
         nix = {
           package = self.packages.${pkgs.stdenv.system}.default;
 

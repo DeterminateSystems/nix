@@ -64,7 +64,7 @@ Install and manage Determinate Nix.
         inherit pkgs;
 
         modules = [
-          nix.homeManagerModules.default
+          nix.homeModules.default
         ];
       };
     }
