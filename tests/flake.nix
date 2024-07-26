@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -23,6 +23,7 @@
             fsType = "ext4";
           };
           boot.loader.grub.devices = [ "/dev/bogus" ];
+          system.stateVersion = "24.05";
         }
       ];
     }).config.system.build.toplevel;
@@ -33,7 +34,7 @@
       modules = [
         nix.homeModules.default
         {
-          home.stateVersion = "23.11";
+          home.stateVersion = "24.05";
           home.username = "example";
           home.homeDirectory = "/no-such/directory";
         }
