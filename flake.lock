@@ -96,16 +96,16 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1724418536,
-        "narHash": "sha256-oYu/9u8ht34JOTV+G/l3CCFJokPiUA2D8CiLZFX61PA=",
-        "rev": "cb0439f0c2d28f971369365d0937dbfaa76b0cce",
-        "revCount": 18097,
+        "lastModified": 1725366229,
+        "narHash": "sha256-mYvdPwl4gcc17UAomkbbOJEgxBQpowmJDrRMWtlYzFY=",
+        "rev": "f1ab41b2bc2b070a5b9c1b7b4ef20cc7b84b1e58",
+        "revCount": 18101,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nix/2.24.4/01917f97-644e-756d-93f3-051d3e3b9817/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nix/2.24.5/0191b85d-f080-7376-9389-09ec6fee7649/source.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://flakehub.com/f/NixOS/nix/%3D2.24.4"
+        "url": "https://flakehub.com/f/NixOS/nix/%3D2.24.5"
       }
     },
     "nixpkgs": {
