@@ -1,7 +1,7 @@
 {
   description = "Determinate Nix";
   inputs = {
-    nix.url = "https://flakehub.com/f/NixOS/nix/=2.25.4";
+    nix.url = "https://flakehub.com/f/NixOS/nix/=2.25.3";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
 
@@ -26,12 +26,12 @@
     in
     {
       closures = forAllSystems ({ system, ... }: nix.packages."${system}".default);
-      tarballs_indirect = forAllSystems ({ system, ... }: nix.packages."${system}".binaryTarball);
-      tarballs_direct = forAllSystems ({ system, ... }: "${nix.packages."${system}".binaryTarball}/nix-${nix.packages."${system}".default.version}-${system}.tar.xz");
+      tarballs_indirect = forAllSystems ({ system, ... }: nix.checks."${system}".binaryTarball);
+      tarballs_direct = forAllSystems ({ system, ... }: "${nix.checks."${system}".binaryTarball}/nix-${nix.packages."${system}".default.version}-${system}.tar.xz");
 
       checks = forAllSystems ({ system, ... }: {
         closure = nix.packages."${system}".default;
-        tarball = nix.packages."${system}".binaryTarball;
+        tarball = nix.checks."${system}".binaryTarball;
       });
 
       packages = forAllSystems ({ system, pkgs, ... }: {
