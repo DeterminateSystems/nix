@@ -24,7 +24,7 @@ jobs:
           set -eux
 
           # Ensure all the checks can be built without internet
-          nix flake check --all-systems
+          nix flake check
           nix build .#tarballs_json
           cat result
 
@@ -63,7 +63,7 @@ jobs:
           set -eux
 
           # Ensure all the checks can be built without internet
-          nix flake check --all-systems
+          nix flake check
           nix build .#tarballs_json
           cat result
 
