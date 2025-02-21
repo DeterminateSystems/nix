@@ -5,14 +5,15 @@ on:
   push:
     branches:
       - main
-    tags:
-      - "v*.*.*"
   pull_request:
     types:
       - opened
       - reopened
       - synchronize
       - labeled
+  release:
+    types:
+      - released
 
 jobs:
   test-closures:
@@ -75,6 +76,7 @@ jobs:
 
   publish:
     needs: [test-closures, test-modules, build-versions-nix]
+    environment: ${{ github.event_name == 'release' && 'production' || '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
