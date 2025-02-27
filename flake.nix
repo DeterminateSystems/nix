@@ -96,8 +96,6 @@
             upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
           };
         };
-
-        services.nix-daemon.enable = true;
       };
 
       nixosModules.default = { lib, config, pkgs, ... }: {
