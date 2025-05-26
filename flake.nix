@@ -23,6 +23,77 @@
       });
 
       forAllSystems = forSystems targetedSystems;
+
+      migrationNotice = moduleType: {
+        assertions = [
+          {
+            assertion = false;
+            message = ''
+              🏳️ Deprecated flake module: DeterminateSystems/nix#${moduleType}.default 🏳️ -
+
+              The DeterminateSystems/nix repository's modules are deprecated because it is unclear what it is for.
+              The README says it gives you Determinate Nix, but it actually installs Nix from upstream.
+            '';
+          }
+          {
+            assertion = moduleType != "darwinModules";
+            message = ''
+              Determinate Nix is fully compatible with nix-darwin.
+            
+              To fix this issue, please:
+              
+              1. install Determinate Nix with the macOS package from https://docs.determinate.systems/
+              2. set `nix.enable = false` in your nix-darwin configuration
+              3. delete the `DeterminateSystems/nix` reference from your flake inputs,
+              4. delete `nix.${moduleType}.default` from your nix-darwin modules list
+              5. rebuild your nix-darwin configuration
+            '';
+          }
+          {
+            assertion = moduleType != "nixosModules";
+            message = ''
+              Determinate Nix is fully compatible with NixOS.
+
+              To fix this issue, please:
+                
+                1. replace the `DeterminateSystems/nix` flake input with:
+
+                    inputs.determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+
+                2. replace the `nix.${moduleType}.default` module in your NixOS modules list with:
+              
+                    determinate.${moduleType}.default
+
+                3. rebuild your NixOS configuration, passing a couple extra options so you don't have to compile Determinate Nix yourself:
+
+                    sudo nixos-rebuild \
+                      switch \
+                      --option extra-substituters https://install.determinate.systems \
+                      --option extra-trusted-public-keys cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM= \
+                      --flake ...
+
+              For more details: https://docs.determinate.systems/guides/advanced-installation/#nixos
+            '';
+          }
+          {
+            assertion = moduleType != "homeModules" && moduleType != "homeManagerModules";
+            message = ''
+              Determinate Nix doesn't offer a home-manager module, because it must be configured at the host level.
+
+              Install or configure Determinate Nix on your system with our getting started documentation:
+              https://docs.determinate.systems/
+            '';
+          }
+          {
+            assertion = false;
+            message = ''
+              We're available to help!
+                * Reach out on Discord: https://determinate.systems/discord
+                * Contact support: support@determinate.systems
+            '';
+          }
+        ];
+      };
     in
     {
       closures = forAllSystems ({ system, ... }: nix.packages."${system}".default);
@@ -72,85 +143,9 @@
         '';
       });
 
-      darwinModules.default = { lib, config, pkgs, ... }: {
-        nix = {
-          package = self.packages.${pkgs.stdenv.system}.default;
-
-          registry.nixpkgs = {
-            exact = true;
-            from = {
-              type = "indirect";
-              id = "nixpkgs";
-            };
-            to = {
-              type = "tarball";
-              url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1.0.tar.gz";
-            };
-          };
-
-          settings = {
-            always-allow-substitutes = true;
-            bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" ];
-            extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
-            upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
-          };
-        };
-      };
-
-      nixosModules.default = { lib, config, pkgs, ... }: {
-        nix = {
-          package = self.packages.${pkgs.stdenv.system}.default;
-
-          registry.nixpkgs = {
-            exact = true;
-            from = {
-              type = "indirect";
-              id = "nixpkgs";
-            };
-            to = {
-              type = "tarball";
-              url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1.0.tar.gz";
-            };
-          };
-
-          settings = {
-            always-allow-substitutes = true;
-            bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" ];
-            extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
-            upgrade-nix-store-path-url = "https://install.determinate.systems/nix-upgrade/stable/universal";
-          };
-        };
-      };
-
-      homeModules.default = { lib, config, pkgs, ... }: {
-        nix = {
-          package = self.packages.${pkgs.stdenv.system}.default;
-
-          registry.nixpkgs = {
-            exact = true;
-            from = {
-              type = "indirect";
-              id = "nixpkgs";
-            };
-            to = {
-              type = "tarball";
-              url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1.0.tar.gz";
-            };
-          };
-
-          settings = {
-            # Note: home-manager configures the user's environment, so only set unrestricted Nix options.
-            bash-prompt-prefix = "(nix:$name)\\040";
-            experimental-features = [ "nix-command" "flakes" ];
-            extra-nix-path = [ "nixpkgs=flake:nixpkgs" ];
-          };
-        };
-      };
-
-      # homeModules is preferred but this ensures compatibility for anyone
-      # currently using nix.homeManagerModules.default in their config
-      homeManagerModules.default = self.homeModules.default;
+      darwinModules.default = migrationNotice "darwinModules";
+      nixosModules.default =  migrationNotice "nixosModules";
+      homeModules.default = migrationNotice "homeModules";
+      homeManagerModules.default = migrationNotice "homeManagerModules";
     };
 }
