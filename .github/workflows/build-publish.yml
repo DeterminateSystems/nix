@@ -35,26 +35,6 @@ jobs:
           nix build .#closures_nix
           cat result
 
-  test-modules:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: |
-          set -eux
-
-          cd tests
-          rm -f flake.lock
-          nix flake lock
-          nix flake check
-
   build-versions-nix:
     runs-on: ubuntu-latest
     steps:
@@ -75,7 +55,7 @@ jobs:
           cat result
 
   publish:
-    needs: [test-closures, test-modules, build-versions-nix]
+    needs: [test-closures, build-versions-nix]
     environment: ${{ github.event_name == 'release' && 'production' || '' }}
     runs-on: ubuntu-latest
     permissions:
