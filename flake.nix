@@ -1,7 +1,7 @@
 {
   description = "Nothing to see here";
   inputs = {
-    nix.url = "https://flakehub.com/f/NixOS/nix/=2.34.0";
+    nix.url = "https://flakehub.com/f/NixOS/nix/=2.34.1";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
 
