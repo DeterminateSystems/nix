@@ -71,6 +71,6 @@ This repository is used by [nix-installer] to get a recent working version of Ni
 [discord]: https://determinate.systems/discord
 [getting-started]: https://docs.determinate.systems
 [nix-installer]: https://github.com/DeterminateSystems/nix-installer
-[nixos-guide]: https://docs.determinate.systems/guides/advanced-installation/#nixos
+[nixos-guide]: https://docs.determinate.systems/guides/nixos-installation
 [support]: mailto:support@determinate.systems
 [upstream]: https://github.com/NixOS/nix

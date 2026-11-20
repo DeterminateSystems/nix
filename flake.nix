@@ -73,7 +73,7 @@
                       ${bold "--option extra-trusted-public-keys cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="} \
                       --flake ...
 
-              For more details: https://docs.determinate.systems/guides/advanced-installation/#nixos
+              For more details: https://docs.determinate.systems/guides/nixos-installation
             '';
 
             homeManagerModules = homeModules;
